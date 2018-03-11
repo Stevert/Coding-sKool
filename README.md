@@ -25,12 +25,9 @@ Open codingskools.py
 
 
 ### DEMO
-<p align="center">
-  <img src="your_relative_path_here" width="350"/>
-  <img src="C:\Users\Ishma Amin\Downloads" width="350"/>
-</p>
-
-
+![DEMO](cont.png)
+![DEMO](hom(1).png)
+![DEMO](image.png)
 
 
 
