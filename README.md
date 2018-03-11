@@ -26,7 +26,7 @@ Open codingskools.py
 
 ### DEMO
 ![DEMO](cont.png)
-![DEMO](hom(1).png)
+![DEMO](hom (1).png)
 ![DEMO](image.png)
 
 
