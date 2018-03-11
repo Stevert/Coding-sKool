@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/stylefinal.css">
+</head>
+<body>
+
+<script>(function (global) {
+    var t1 = global.localStorage.getItem("numCorrect");
+    document.getElementById('t1').innerHTML=t1;
+}(window));
+
+
+</script>
+
+
+<section>
+  <!--for demo wrap-->
+  <h1>FINAL RESULT</h1>
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th>TEST</th>
+          <th>YOURSCORE</th>
+          <th>MAX SCORE</th>
+          <th>WORD COUNT</th>
+          <th>PERCENTAGE</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+        <tr>
+          <td id="t1" >{{ t1 }}</td>
+
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
