@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i');
+
+
+
+
+body{
+	margin: 0;
+ background-image: url(codings.png);
+ height: 100 vh;
+ background-size: cover;
+ background-position: center;
+ background-repeat: no-repeat;
+background-attachment: fixed;
+}
+header{
+	background: black;
+	color: blue;
+	border-color: blue;
+	border-style: all;
+	padding:8px 0px 6px 40px;
+	height: 45px;
+}
+header h1{
+	display: inline;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 300;
+	font-size: 32px;
+	float: left;
+	margin-top: 0px;
+	margin-right: 10px;
+}
+
+nav ul{
+	display: inline;
+	padding: 0px;
+	float:left;
+}
+
+nav ul li{
+	display: inline-block;
+	list-style-type: none;
+	font-weight: 200;
+	color: white;
+	float: left;
+	margin-left: 10px;
+}
+
+nav ul li a{
+	color: red;
+	text-decoration: none;
+}
+
+#nav{
+	font-family: 'Montserrat', sans-serif;
+}
+
+.homered{
+	background-color: white;
+	border-color: black;
+	border-right-color: black;
+	padding: 30px 10px 16px 10px;
+}
+
+.divider{
+	background-color: white;
+	height: 5px;
+}
+
+.homeblack:hover{
+	background-color: yellow;
+	border-color: black;
+	padding: 30px 10px 16px 10px;
+}
+
+
+.code{
+	//background-image: url(codings.png);
+	height: 100%;
+	width: 100%;
+	background-size: cover;
+background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-blend-mode:color-dodge;
+	margin: 0;
+	padding: 0;
+}
+
+.hometitle1{
+	font-family: 'Raleway', sans-serif;
+	margin: 0;
+	padding: 9% 5% 0% 0%;
+	margin-left: 10%;
+	margin-right: %65;
+	font-size: 50px;
+	color: red;
+	background-color: rgba(128,128,128,0.6);
+	background-clip: content-box;
+	//background-position: center;
+	display: inline-block;
+	text-decoration-line: overline;
+	text-align: left;
+}
+
+.homecode{
+	font-family: 'Raleway', sans-serif;
+	margin: 0;
+	padding: 9% 5% 0% 0%;
+	margin-left: 10%;
+	margin-right: 65%;
+	font-size: 50px;
+	color: red;
+	background-color: rgba(128,128,128,0.6);
+	background-clip: content-box;
+	//background-position: center;
+	display: inline-block;
+	text-decoration-line: overline;
+	text-align: left;
+}
+
+a.button{
+	-webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    color: initial;
+	background: green;
+	border: none;
+	height: 30px;
+	text-decoration: underline;
+	font-size: 00.4em;
+	padding: 0 1em;
+	cursor: pointer;
+	outline: ridge;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+
+}
+
+
+
+
+
+
