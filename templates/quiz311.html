@@ -1,0 +1,296 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<title>Quiz</title>
+<h1>Basic Quiz</h1>
+<link rel="stylesheet" href="stylequiz.css" type="text/css">
+</head>
+<body>
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+<button id="previous">Previous Question</button>
+<button id="next">Next Question</button>
+<form action="final"><button id="submit">Submit Quiz</button></form>
+<div id="results"></div>
+<script>
+    var flag=0
+    function bt() {
+        if(flag==0){
+            flag=1;
+
+        }
+
+    }
+(function() {
+
+  const myQuestions = [
+    {
+      question: "If you needed to execute some code repeatedly based on a certain condition, which of the following would you use?",
+      answers: {
+        a: "Variable",
+        b: "Loop",
+        c: "compiler",
+		d:"converter"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "Before source code can be compiled, it has to be _______________",
+      answers: {
+        a: "saved in a separate file",
+        b: "capitalized",
+        c: "viewed in a command prompt",
+		d: " parsed"
+      },
+      correctAnswer: "d"
+    },
+	{
+      question: "Which of the following is NOT a web language?",
+      answers: {
+        a: "Javascript",
+        b: "HTML",
+        c: "C++",
+        d: "PHP"
+      },
+      correctAnswer: "c"
+    },
+	{
+      question: "Which of the following is NOT a software language?",
+      answers: {
+        a: "Visual Basic",
+        b: "HTML",
+        c: "C",
+        d: "Java"
+      },
+      correctAnswer: "b"
+    },
+	{
+      question: "What is computer programming?",
+      answers: {
+        a: " Convincing the computer to never freeze",
+        b: " Speeding up your computer",
+        c: " Telling the computer what to do through a special set of instructions",
+        d: " Setting the alarm on a computer"
+      },
+      correctAnswer: "c"
+    },
+		{
+      question: "What is object-oriented programming?",
+      answers: {
+        a: " A type of programming involving data types representing data structures",
+        b: " A type of programming using only numbers",
+        c: " A type of programming involving a structured method of creating programs",
+        d: " A type of programming not in use anymore"
+      },
+      correctAnswer: "a"
+    },
+		{
+      question: "Integer i = new Integer(5);"+"\r\n Integer j = new Integer(5);"+"\r\n if (i==j)\r\n System.out.println(“Equal”); \r\n else \n System.out.println(“Not equal”);",
+      answers: {
+        a: "Equal",
+        b: "Not Equal",
+        c: "The program doesn't compile because == can't be used with references. ",
+        d: "The program doesn’t execute because i and j are not correctlyinitialized."
+      },
+      correctAnswer: "b"
+    },
+		{
+      question: "Which of these selection statements test only for equality?",
+      answers: {
+        a: "if",
+        b: "switch",
+        c: "if and switch",
+        d: "none of the above"
+      },
+      correctAnswer: "b"
+    },
+		{
+      question: "Which of the following loops will execute the body of loop even when condition controlling the loop is initially false?",
+      answers: {
+        a: "do-while",
+        b: "while",
+        c: "for",
+        d: "none of the above"
+      },
+      correctAnswer: "a"
+    },
+		{
+      question: "For initialization a = 2, c = 1 the value of a and c after this code will be c = (c) ? a = 0 : 2;",
+      answers: {
+        a: "a=0 c=0",
+        b: "a=2 c=2",
+        c: "a=1 c=1",
+        d: "a=1 c=2"
+      },
+      correctAnswer: "a"
+    },
+/*	{
+      question: "",
+      answers: {
+        a: "",
+        b: "",
+        c: "",
+        d: ""
+      },
+      correctAnswer: "d"
+    },*/
+		{
+      question: "Which of these is a conditional statement?",
+      answers: {
+        a: "Forever move 11 steps ",
+        b: "When green flag is cliked turn 15 degree",
+        c: "if I snap my fingers,",
+        d: "repeat 10 times"
+      },
+      correctAnswer: "b"
+    }
+	
+  ];
+
+  var numCorrect1=0;
+  var allCorrect=0;
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+		
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        answers.push(
+          `<label>
+             <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+           </label>`
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+           <div class="question"> ${currentQuestion.question} </div>
+           <div class="answers"> ${answers.join("")} </div>
+         </div>`
+      );
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+var user="";
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+	  user=user+" ";
+	  //user=user+userAnswer;
+	  //alert(userAnswer);
+	  
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+         numCorrect1=numCorrect;
+        // color the answers green
+        answerContainers[questionNumber].style.color = "lightgreen";
+      } else {
+        // if answer is wrong or blank
+        // color the answers red
+        answerContainers[questionNumber].style.color = "red";
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+	//window.location.href="http://google.co.in";
+	$.post("abc",myQuestions);
+	$.post("bc",user);
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+    
+    if (currentSlide === 0) {
+      previousButton.style.display = "none";
+    } else {
+      previousButton.style.display = "inline-block";
+    }
+    
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+  const previousButton = document.getElementById("previous");
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+
+  (function (global) {
+      var k;
+    document.getElementById("submit").addEventListener("click", function () {
+        global.localStorage.setItem("numCorrect",String(numCorrect1));
+        if(numCorrect1<7)
+            k="Improvement is needed.\n Check our resources section for help"
+        else
+            k="You have passed the Data Structures Test."
+        alert("Your Final Score is "+numCorrect1+" out of 10.\n"+k)
+
+    }, false);
+}(window))
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+
+
+
+
+})();
+
+
+</script>
+</body>
+</html>

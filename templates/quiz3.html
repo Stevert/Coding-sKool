@@ -1,0 +1,233 @@
+<html>
+<head>
+<title>Quiz</title>
+<h1>Quiz on Important Facts</h1>
+<link rel="stylesheet" href="/static/stylequiz.css" type="text/css">
+</head>
+<body>
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+<button id="previous">Previous Question</button>
+<button id="next">Next Question</button>
+<button id="submit">Submit Quiz</button>
+<div id="results"></div>
+<script>
+(function() {
+  const myQuestions = [
+    {
+      question: "Which of the following has search efficiency of Ο(1) −",
+      answers: {
+        a: "Tree",
+        b: "Heap",
+        c: "Hash Table",
+        d: "Linked List",
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "Which of the following has search efficiency of Ο(1) −",
+      answers: {
+        a: "Ο(m | n)",
+        b: "Ο(m + n)",
+        c: "Ο(m log n)",
+          d: "Ο(n log n)"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "A matrix \"a\" is called lower triangular if and only if for all j > ai j = 0. If such a matrix is to be sorted in a one dimensional array, A then ai j could be mapped to which of the following index of A ?",
+      answers: {
+        a: "1/2 * i (i + 1) j ",
+        b: "i + j",
+        c: "i (i + 1) + j",
+        d: "None of these"
+      },
+      correctAnswer: "a"
+    },
+	{
+      question: "The following sorting algorithms maintain two sub-lists, one sorted and one to be sorted −",
+      answers: {
+        a: "Selection Sort",
+        b: "Insertion Sort",
+        c: "Merge Sort",
+        d: "both A & B"
+      },
+      correctAnswer: "d"
+    },
+      {
+      question: "The average number of comparisons performed by the merge sort algorithm, in merging two sorted liss of length 2 is",
+      answers: {
+        a: "8/3",
+        b: "8/5",
+        c: "11/7",
+        d: "11/6"
+      },
+      correctAnswer: "a"
+    },
+    {
+      question: "Given an unsorted array. The array has this property that every element in array is at most k distance from its position in sorted array where k is a positive integer smaller than size of array. Which sorting algorithm can be easily modified for sorting this array and what is the obtainable time complexity?",
+      answers: {
+        a: "Insertion Sort with time complexity O(kn)",
+        b: "Heap Sort with time complexity O(n log k)",
+        c: "Quick Sort with time complexity O(k log k)",
+        d: "Merge Sort with time complexity O(k log k)"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "What is time complexity of fun()?\n" +
+      "int fun(int n)\n" +
+      "{\n" +
+      "  int count = 0;\n" +
+      "  for (int i = n; i > 0; i /= 2)\n" +
+      "     for (int j = 0; j < i; j++)\n" +
+      "        count += 1;\n" +
+      "  return count;\n" +
+      "}",
+      answers: {
+        a: "O(n^2)",
+        b: "O(n log n)",
+        c: "O(n)",
+        d: "O(n log n)",
+      },
+      correctAnswer: "c"
+    },
+
+    {
+      question: "Which of the following algorithms exhibits the unnatural behavior that, minimum number of comparisons are needed if the list to be sorted is in the reverse sorted order and maximum number of comparisons are needed if they are already in sorted order?",
+      answers: {
+        a: "Heap Sort",
+        b: "Radix Sort",
+        c: "Binary Insertion Sort",
+        d: "No such technique"
+      },
+      correctAnswer: "c"
+    }
+
+  ];
+
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        answers.push(
+          `<label>
+             <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+           </label>`
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+           <div class="question"> ${currentQuestion.question} </div>
+           <div class="answers"> ${answers.join("")} </div>
+         </div>`
+      );
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+var user="";
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+	  user=user+" ";
+	  user=user+userAnswer;
+	  //alert(userAnswer);
+
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+
+        // color the answers green
+        answerContainers[questionNumber].style.color = "lightgreen";
+      } else {
+        // if answer is wrong or blank
+        // color the answers red
+        answerContainers[questionNumber].style.color = "red";
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+	//window.location.href="http://google.co.in";
+	alert(user);
+	$.post("abc",myQuestions);
+	$.post("bc",user);
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+    
+    if (currentSlide === 0) {
+      previousButton.style.display = "none";
+    } else {
+      previousButton.style.display = "inline-block";
+    }
+    
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+  const previousButton = document.getElementById("previous");
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+})();
+</script>
+</body>
+</html>

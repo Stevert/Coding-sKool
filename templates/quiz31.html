@@ -1,0 +1,276 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<title>Quiz</title>
+<h1>Quiz on Data Structures</h1>
+<link rel="stylesheet" href="/static/stylequiz.css" type="text/css">
+</head>
+<body>
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+<button id="previous">Previous Question</button>
+<button id="next">Next Question</button>
+<form action="final"><button id="submit">Submit Quiz</button></form>
+<div id="results"></div>
+<script>
+    var flag=0
+    function bt() {
+        if(flag==0){
+            flag=1;
+
+        }
+
+    }
+(function() {
+
+  const myQuestions = [
+    {
+      question: "What is the next field of structure node in the Queue? ",
+      answers: {
+        a: "Results into the storage of queue elements",
+        b: "Results into the storage of address of next node by holding the next element of queue.",
+        c: "Results into the address allocation data elements to next node."
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "From where does the insertion and deletion of elements get accomplished in Queues? ",
+      answers: {
+        a: "Rear & Front ends respectively",
+        b: "Front & Rear ends respectively",
+        c: " Only Rear ends"
+      },
+      correctAnswer: "a"
+    },
+    {
+      question: "Which among the below mentioned entities is / are essential for an Array Representation of a Queue?",
+      answers: {
+        a: "An array to hold queue elements",
+        b: "A variable to hold the index of front element",
+        c: "All of the above",
+        d: "A variable to hold the index of rear element"
+      },
+      correctAnswer: "c"
+    },
+	{
+      question: "   Which value is assigned/set at front and rear ends during the Initialization of a Queue?",
+      answers: {
+        a: "0",
+        b: "-1",
+        c: "1",
+        d: "infinity"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "Which data structures find their applications in BFS and DFS Traversal mechanisms on a Tree respectively?",
+      answers: {
+        a: "Graph & Stack",
+        b: "queue & Stack",
+        c: "Queue & Graph",
+        d: "None of the Above"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "Which data structures find their applications in BFS and DFS Traversal mechanisms on a Tree respectively?",
+      answers: {
+        a: "Graph & Stack",
+        b: "queue & Stack",
+        c: "Queue & Graph",
+        d: "None of the Above"
+      },
+      correctAnswer: "b"
+     },
+    {
+      question: "What should be the growing direction of two stacks while implementing them in a similar array so as to reduce the overflow chances? ",
+      answers: {
+        a: "forward",
+        b: "backward",
+        c: "opposite",
+        d: "None of the Above"
+      },
+      correctAnswer: "c"
+     },
+    {
+      question: " Which balance factor is stored in the new field introduced by an AVL tree for the representation of a node?  ",
+      answers: {
+        a: "Length",
+        b: "Height",
+        c: "width",
+        d: "information"
+      },
+      correctAnswer: "b"
+     },
+    {
+      question: " Which type of linked list comprises the adjacently placed first and the last elements?  ",
+      answers: {
+        a: "Singly Linked List",
+        b: " Doubly Linked List",
+        c: "Circular Linked List",
+        d: "All of the above"
+      },
+      correctAnswer: "c"
+     },
+    {
+      question: " How many edges are present in a Complete Graph with ' N ' Vertices?  ",
+      answers: {
+        a: "N - 1",
+        b: " N - 1 / 2",
+        c: " N ( N - 1 ) / 2",
+        d: "( N - 1 )2"
+      },
+      correctAnswer: "c"
+     },
+
+	
+  ];
+
+  var numCorrect1=0;
+  var allCorrect=0;
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+		
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        answers.push(
+          `<label>
+             <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+           </label>`
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+           <div class="question"> ${currentQuestion.question} </div>
+           <div class="answers"> ${answers.join("")} </div>
+         </div>`
+      );
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+var user="";
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+	  user=user+" ";
+	  //user=user+userAnswer;
+	  //alert(userAnswer);
+	  
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+         numCorrect1=numCorrect;
+        // color the answers green
+        answerContainers[questionNumber].style.color = "lightgreen";
+      } else {
+        // if answer is wrong or blank
+        // color the answers red
+        answerContainers[questionNumber].style.color = "red";
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+	//window.location.href="http://google.co.in";
+	alert(user);
+	$.post("abc",myQuestions);
+	$.post("bc",user);
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+    
+    if (currentSlide === 0) {
+      previousButton.style.display = "none";
+    } else {
+      previousButton.style.display = "inline-block";
+    }
+    
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+  const previousButton = document.getElementById("previous");
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+
+  (function (global) {
+      var k;
+    document.getElementById("submit").addEventListener("click", function () {
+        global.localStorage.setItem("numCorrect",String(numCorrect1));
+        if(numCorrect1<7)
+            k="Improvement is needed.\n Check our resources section for help"
+        else
+            k="You have passed the Data Structures Test."
+        alert("Your Final Score is "+numCorrect1+" out of 10.\n"+k)
+
+    }, false);
+}(window))
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+
+
+
+
+})();
+
+
+</script>
+</body>
+</html>

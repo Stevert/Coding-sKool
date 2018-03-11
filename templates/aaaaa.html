@@ -1,0 +1,215 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<title>Quiz</title>
+<h1>Quiz on Algorithms</h1>
+<link rel="stylesheet" href="stylequiz.css" type="text/css">
+</head>
+<body>
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+<button id="previous">Previous Question</button>
+<button id="next">Next Question</button>
+<form action="final"><button id="submit">Submit Quiz</button></form>
+<div id="results"></div>
+<script>
+    var flag=0
+    function bt() {
+        if(flag==0){
+            flag=1;
+
+        }
+
+    }
+(function() {
+
+  const myQuestions = [
+    {
+      question: "Which of the following has search efficiency of Ο(1) −",
+      answers: {
+        a: "Tree",
+        b: "Heap",
+        c: "Hash Table",
+        d: "Linked List"
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "Which of the following has search efficiency of Ο(1) −",
+      answers: {
+        a: "Ο(m | n)",
+        b: "Ο(m + n)",
+        c: "Ο(m log n)",
+          d: "Ο(n log n)"
+      },
+      correctAnswer: "b"
+    },
+	{
+      question: "The following sorting algorithms maintain two sub-lists, one sorted and one to be sorted −",
+      answers: {
+        a: "Selection Sort",
+        b: "Insertion Sort",
+        c: "Merge Sort",
+        d: "both A & B"
+      },
+      correctAnswer: "d"
+    },
+    {
+      question: "The average number of comparisons performed by the merge sort algorithm, in merging two sorted liss of length 2 is",
+      answers: {
+        a: "8/3",
+        b: "8/5",
+        c: "11/7",
+        d: "11/6"
+      },
+      correctAnswer: "a"
+    },
+  ];
+
+  var numCorrect1=0;
+  var allCorrect=0;
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+		
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        answers.push(
+          `<label>
+             <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+           </label>`
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+           <div class="question"> ${currentQuestion.question} </div>
+           <div class="answers"> ${answers.join("")} </div>
+         </div>`
+      );
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+var user="";
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+	  user=user+" ";
+	  //user=user+userAnswer;
+	  //alert(userAnswer);
+	  
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+         numCorrect1=numCorrect;
+        // color the answers green
+        answerContainers[questionNumber].style.color = "lightgreen";
+      } else {
+        // if answer is wrong or blank
+        // color the answers red
+        answerContainers[questionNumber].style.color = "red";
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+	//window.location.href="http://google.co.in";
+	$.post("abc",myQuestions);
+	$.post("bc",user);
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+    
+    if (currentSlide === 0) {
+      previousButton.style.display = "none";
+    } else {
+      previousButton.style.display = "inline-block";
+    }
+    
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+  const previousButton = document.getElementById("previous");
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+
+  (function (global) {
+      var k;
+    document.getElementById("submit").addEventListener("click", function () {
+        global.localStorage.setItem("numCorrect",String(numCorrect1));
+        if(numCorrect1<7)
+            k="Improvement is needed.\n Check our resources section for help"
+        else
+            k="You have passed the Data Structures Test."
+        alert("Your Final Score is "+numCorrect1+" out of 10.\n"+k)
+
+    }, false);
+}(window))
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+
+
+
+
+})();
+
+
+</script>
+</body>
+</html>
