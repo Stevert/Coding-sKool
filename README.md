@@ -18,7 +18,8 @@ This is a complete desktop application created for self evaluation of coding ski
 
 
 ### Installing
-
+https://github.com/Stevert/Coding-sKool.git
+Open codingskools.py
 
 
 
